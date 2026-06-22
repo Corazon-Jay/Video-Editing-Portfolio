@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jared Ogboriefor — Video Editor</title>
+  <meta name="description" content="Freelance video editor specialising in ministry films and church content. Based in Benin City, Nigeria." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #16161A;
+      --surface:     #1F1F26;
+      --surface-2:   #2A2A33;
+      --text:        #F0EDE8;
+      --muted:       #8A8A95;
+      --border:      rgba(255,255,255,0.07);
+      --amber:       #D4892A;
+      --amber-dim:   rgba(212,137,42,0.14);
+      --sage:        #7B9E87;
+      --sage-dim:    rgba(123,158,135,0.14);
+      --violet:      #A078C8;
+      --violet-dim:  rgba(160,120,200,0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(22,22,26,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--amber); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--bg) !important;
+      background: var(--amber);
+      padding: 0.45rem 1.1rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden;
+      background: var(--amber);
+      padding: 0.5rem 0;
+      margin-top: 62px;
+    }
+
+    .ticker-track {
+      display: flex;
+      white-space: nowrap;
+      width: max-content;
+      animation: scroll-left 32s linear infinite;
+    }
+
+    .ticker-item {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      padding: 0 1.6rem;
+    }
+
+    .ticker-sep {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      color: rgba(22,22,26,0.4);
+      padding: 0;
+    }
+
+    @keyframes scroll-left {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: calc(92vh - 62px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      line-height: 0.97;
+      letter-spacing: -0.035em;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    .hero-title .hi { color: var(--amber); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.75;
+      margin-bottom: 2.75rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-solid {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--text);
+      padding: 0.8rem 1.75rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-solid:hover { opacity: 0.85; }
+
+    .btn-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .btn-text:hover { color: var(--text); }
+
+    /* ── SECTION WRAPPER ── */
+    .section-wrap {
+      padding: 6rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 2.75rem;
+    }
+
+    /* ── FILTER TABS ── */
+    .filter-tabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.25rem;
+    }
+
+    .tab-btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.42rem 1rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.is-active {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: var(--bg);
+    }
+
+    /* ── WORK GRID ── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .work-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.28s ease, border-color 0.28s ease;
+    }
+
+    .work-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(212,137,42,0.28);
+    }
+
+    .work-card.is-hidden { display: none; }
+
+    /* thumbnail */
+    .card-thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .work-card:hover .card-thumb img { transform: scale(1.05); }
+
+    .thumb-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--surface-2) 0%, #1a1a22 100%);
+    }
+
+    .thumb-placeholder svg {
+      width: 36px;
+      height: 36px;
+      opacity: 0.2;
+    }
+
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      transition: opacity 0.22s;
+    }
+
+    .work-card:hover .play-overlay { opacity: 1; }
+
+    .play-circle {
+      width: 50px;
+      height: 50px;
+      background: rgba(255,255,255,0.94);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-circle svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--bg);
+      margin-left: 3px;
+    }
+
+    /* card body */
+    .card-body {
+      padding: 1.2rem 1.35rem 1.45rem;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.6rem;
+      border-radius: 2px;
+      margin-bottom: 0.7rem;
+    }
+
+    .tag-ministry { background: var(--sage-dim);   color: var(--sage);   }
+    .tag-business { background: var(--amber-dim);  color: var(--amber);  }
+    .tag-personal { background: var(--violet-dim); color: var(--violet); }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.32;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .card-link {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: gap 0.18s;
+    }
+
+    .card-link:hover { gap: 0.55rem; }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-body p {
+      font-size: 0.975rem;
+      color: var(--muted);
+      line-height: 1.82;
+      margin-bottom: 1.1rem;
+    }
+
+    .about-body p:last-of-type { margin-bottom: 0; }
+
+    .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1.6rem;
+    }
+
+    .tool-chip {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.32rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+    }
+
+    /* stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.4rem 1.25rem;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.4rem;
+      letter-spacing: -0.04em;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── CONTACT ── */
+    .contact-band {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-heading {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: var(--text);
+    }
+
+    .contact-heading em {
+      font-style: normal;
+      color: var(--amber);
+    }
+
+    .contact-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--amber);
+      padding: 1rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+
+    .contact-btn:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.75rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+
+    .footer-links a:hover { color: var(--amber); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .hero { padding: 3.5rem 1.25rem 3rem; }
+      .section-wrap { padding: 4rem 1.25rem; }
+      .work-grid { grid-template-columns: 1fr; }
+      .contact-inner { flex-direction: column; align-items: flex-start; padding: 4rem 1.25rem; }
+      footer { padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav aria-label="Main navigation">
+    <a href="#" class="nav-logo">Jared<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="mailto:ogborieforjared@gmail.com" class="nav-cta">Get in touch</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── TICKER ── -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <!-- first set -->
+      <span class="ticker-item">Church Films</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Brand Commercials</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Documentary</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">YouTube Content</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Event Coverage</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Social Reels</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">DaVinci Resolve</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">CapCut</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Colour Grading</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Multicam Editing</span><span class="ticker-sep">·</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Church Films</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Brand Commercials</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Documentary</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">YouTube Content</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Event Coverage</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Social Reels</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">DaVinci Resolve</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">CapCut</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Colour Grading</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Multicam Editing</span><span class="ticker-sep">·</span>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="hero">
+      <p class="hero-eyebrow">Jared Ogboriefor · Video Editor · Benin City, Nigeria</p>
+      <h1 class="hero-title">Frames that<br>move <span class="hi">people.</span></h1>
+      <p class="hero-sub">Editing for ministries, small businesses, and creators — with 5+ years of experience turning raw footage into stories that land.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn-solid">See the work</a>
+        <a href="mailto:ogborieforjared@gmail.com" class="btn-text">Let's collaborate →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WORK ── -->
+  <div class="section-wrap" id="work">
+    <p class="section-eyebrow">Portfolio</p>
+    <h2 class="section-title">Selected Work</h2>
+
+    <div class="work-grid" id="workGrid">
+
+      <!-- ── GOSPEL STAR CHOIR FESTIVAL ── -->
+
+      <!-- CARD: Choir Festival Ad 1 -->
+      <article class="work-card" data-category="ministry">
+        <div class="card-thumb">
+          <div class="thumb-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9A2.25 2.25 0 0013.5 5.25h-9A2.25 2.25 0 002.25 7.5v9A2.25 2.25 0 004.5 18.75z"/>
+            </svg>
+          </div>
+          <img src="https://img.youtube.com/vi/GOSPEL_STAR_AD_1/maxresdefault.jpg"
+               alt="Gospel Star Choir Festival — Advert 1"
+               loading="lazy"
+               onerror="this.style.display='none'" />
+          <a href="https://youtu.be/GOSPEL_STAR_AD_1" target="_blank" rel="noopener" class="play-overlay" aria-label="Watch Gospel Star Choir Festival advert 1 on YouTube">
+            <div class="play-circle">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </a>
+        </div>
+        <div class="card-body">
+          <span class="card-tag tag-ministry">Ministry &amp; Church</span>
+          <h3 class="card-title">Gospel Star Choir Festival — Advert 1</h3>
+          <p class="card-desc">Promotional advert for the Gospel Star Choir Festival — cutting motion, music-driven pacing, and a bold visual identity built to drive attendance.</p>
+          <a href="https://youtu.be/GOSPEL_STAR_AD_1" target="_blank" rel="noopener" class="card-link">Watch on YouTube →</a>
+        </div>
+      </article>
+
+      <!-- CARD: Choir Festival Ad 2 -->
+      <article class="work-card" data-category="ministry">
+        <div class="card-thumb">
+          <div class="thumb-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9A2.25 2.25 0 0013.5 5.25h-9A2.25 2.25 0 002.25 7.5v9A2.25 2.25 0 004.5 18.75z"/>
+            </svg>
+          </div>
+          <img src="https://img.youtube.com/vi/GOSPEL_STAR_AD_2/maxresdefault.jpg"
+               alt="Gospel Star Choir Festival — Advert 2"
+               loading="lazy"
+               onerror="this.style.display='none'" />
+          <a href="https://youtu.be/GOSPEL_STAR_AD_2" target="_blank" rel="noopener" class="play-overlay" aria-label="Watch Gospel Star Choir Festival advert 2 on YouTube">
+            <div class="play-circle">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </a>
+        </div>
+        <div class="card-body">
+          <span class="card-tag tag-ministry">Ministry &amp; Church</span>
+          <h3 class="card-title">Gospel Star Choir Festival — Advert 2</h3>
+          <p class="card-desc">Second advert in the festival campaign series — a tighter cut with a different narrative angle to reach a broader audience across platforms.</p>
+          <a href="https://youtu.be/GOSPEL_STAR_AD_2" target="_blank" rel="noopener" class="card-link">Watch on YouTube →</a>
+        </div>
+      </article>
+
+      <!-- CARD: Choir Festival Ad 3 -->
+      <article class="work-card" data-category="ministry">
+        <div class="card-thumb">
+          <div class="thumb-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9A2.25 2.25 0 0013.5 5.25h-9A2.25 2.25 0 002.25 7.5v9A2.25 2.25 0 004.5 18.75z"/>
+            </svg>
+          </div>
+          <img src="https://img.youtube.com/vi/GOSPEL_STAR_AD_3/maxresdefault.jpg"
+               alt="Gospel Star Choir Festival — Advert 3"
+               loading="lazy"
+               onerror="this.style.display='none'" />
+          <a href="https://youtu.be/GOSPEL_STAR_AD_3" target="_blank" rel="noopener" class="play-overlay" aria-label="Watch Gospel Star Choir Festival advert 3 on YouTube">
+            <div class="play-circle">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </a>
+        </div>
+        <div class="card-body">
+          <span class="card-tag tag-ministry">Ministry &amp; Church</span>
+          <h3 class="card-title">Gospel Star Choir Festival — Advert 3</h3>
+          <p class="card-desc">Final advert in the series — the closing push before event day, with high-energy pacing and a clear call-to-action woven through the edit.</p>
+          <a href="https://youtu.be/GOSPEL_STAR_AD_3" target="_blank" rel="noopener" class="card-link">Watch on YouTube →</a>
+        </div>
+      </article>
+
+      <!-- ── SNOCCON 2025 ── -->
+
+      <!-- CARD: SNOCCON 2025 Come Up Hither -->
+      <article class="work-card" data-category="ministry">
+        <div class="card-thumb">
+          <div class="thumb-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9A2.25 2.25 0 0013.5 5.25h-9A2.25 2.25 0 002.25 7.5v9A2.25 2.25 0 004.5 18.75z"/>
+            </svg>
+          </div>
+          <img src="https://img.youtube.com/vi/SNOCCON_2025_VIDEO_ID/maxresdefault.jpg"
+               alt="SNOCCON 2025 — Come Up Hither Promotional Video"
+               loading="lazy"
+               onerror="this.style.display='none'" />
+          <a href="https://youtu.be/SNOCCON_2025_VIDEO_ID" target="_blank" rel="noopener" class="play-overlay" aria-label="Watch SNOCCON 2025 Come Up Hither promo on YouTube">
+            <div class="play-circle">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </a>
+        </div>
+        <div class="card-body">
+          <span class="card-tag tag-ministry">Ministry &amp; Church</span>
+          <h3 class="card-title">SNOCCON 2025 — "Come Up Hither" Promotional Video</h3>
+          <p class="card-desc">Official promotional video for the SNOCCON 2025 youth conference. Theme-driven edit with purposeful pacing, motion titles, and a cinematic atmosphere built to mobilise the youth.</p>
+          <a href="https://youtu.be/SNOCCON_2025_VIDEO_ID" target="_blank" rel="noopener" class="card-link">Watch on YouTube →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- ── ABOUT ── -->
+  <div class="section-wrap" id="about">
+    <div class="about-grid">
+      <div class="about-body">
+        <p class="section-eyebrow">About</p>
+        <h2 class="section-title">The editor behind<br>the work</h2>
+        <p>I'm Jared Ogboriefor — a freelance video editor based in Benin City, Nigeria, with over five years of experience turning raw footage into purposeful stories. My work spans ministry films, church event promos, and choir productions.</p>
+        <p>I've led the media department at Ministry of Perfection Church Inc., overseeing videography, broadcast, display, photography, and content units. That means I don't just edit — I understand production from the ground up and can collaborate at any stage of a project.</p>
+        <p>Whether it's a 60-second brand ad or a full-length documentary, I bring the same attention to pace, colour, and emotion to every cut.</p>
+        <div class="tools-row">
+          <span class="tool-chip">DaVinci Resolve</span>
+          <span class="tool-chip">CapCut</span>
+          <span class="tool-chip">Multicam Editing</span>
+          <span class="tool-chip">Colour Grading</span>
+          <span class="tool-chip">Audio Mixing</span>
+          <span class="tool-chip">Motion Graphics</span>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Years of editing experience</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Content verticals: ministry, business, YouTube</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Media units led at church</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">NG</div>
+          <div class="stat-label">Based in Benin City, Nigeria</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTACT ── -->
+  <div class="contact-band" id="contact">
+    <div class="contact-inner">
+      <h2 class="contact-heading">Let's make<br>something <em>great.</em></h2>
+      <a href="mailto:ogborieforjared@gmail.com" class="contact-btn">Send me a message →</a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span class="footer-name">Jared Ogboriefor · Video Editor</span>
+    <div class="footer-links">
+      <a href="https://linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" rel="noopener">YouTube</a>
+      <a href="mailto:ogborieforjared@gmail.com">Email</a>
+    </div>
+  </footer>
+
+  <script>
+    // No filter tabs — all projects are ministry content
+  </script>
+
+</body>
+</html>
